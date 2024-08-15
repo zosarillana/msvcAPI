@@ -11,8 +11,8 @@ using Restful_API.Data;
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    [Migration("20240809012132_Initial")]
-    partial class Initial
+    [Migration("20240815065700_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

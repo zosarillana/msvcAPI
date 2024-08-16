@@ -21,44 +21,47 @@ namespace Restful_API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUserList()
         {
-            return Ok(await _context.Users.ToListAsync());
-
+            var users = await _context.Users.ToListAsync();
+            return Ok(users);
         }
+
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(CreateUserDto createUserDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var errors = new Dictionary<string, List<string>>();
 
             // Validate Password
             if (!IsValidPassword(createUserDto.user_password))
-                return BadRequest("Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one numeric digit.");
+                errors["user_password"] = new List<string> { "Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one numeric digit." };
 
             // Validate AbfiId
             if (string.IsNullOrWhiteSpace(createUserDto.abfi_id))
-                return BadRequest("AbfiId cannot be empty.");
+                errors["abfi_id"] = new List<string> { "AbfiId cannot be empty." };
 
             if (await _context.Users.AnyAsync(u => u.abfi_id == createUserDto.abfi_id))
-                return BadRequest("ID has already been used.");
+                errors["abfi_id"] = new List<string> { "ID has already been used." };
 
             // Validate Contact Number
             if (string.IsNullOrWhiteSpace(createUserDto.contact_num) ||
                 createUserDto.contact_num.Length != 11 ||
                 !createUserDto.contact_num.All(char.IsDigit))
-                return BadRequest("Contact Number must be exactly 11 digits.");
+                errors["contact_num"] = new List<string> { "Contact Number must be exactly 11 digits." };
 
             // Validate Username
             if (string.IsNullOrWhiteSpace(createUserDto.username) || createUserDto.username.Length < 8)
-                return BadRequest("Username must be at least 8 characters long.");
+                errors["username"] = new List<string> { "Username must be at least 8 characters long." };
 
             // Validate Email Address
             if (string.IsNullOrWhiteSpace(createUserDto.email_add) ||
                 !createUserDto.email_add.EndsWith("@abfiph.com") ||
                 !new EmailAddressAttribute().IsValid(createUserDto.email_add))
-                return BadRequest("Email address must be a valid address with domain '@abfiph.com'.");
+                errors["email_add"] = new List<string> { "Email address must be a valid address with domain '@abfiph.com'." };
 
             if (await _context.Users.AnyAsync(u => u.email_add == createUserDto.email_add))
-                return BadRequest("Email address must be unique.");
+                errors["email_add"] = new List<string> { "Email address must be unique." };
+
+            if (errors.Count > 0)
+                return BadRequest(new { errors });
 
             // Create new user
             var user = new User
@@ -86,16 +89,20 @@ namespace Restful_API.Controllers
             {
                 // Log exception details for debugging
                 Console.WriteLine($"Error: {ex.Message}");
+
                 if (ex.InnerException is SqlException sqlEx)
                 {
                     switch (sqlEx.Number)
                     {
                         case 2627: // Unique constraint violation
-                            return BadRequest("A user with the same ID or email address already exists.");
+                            errors["general"] = new List<string> { "A user with the same ID or email address already exists." };
+                            return BadRequest(new { errors });
                         case 547: // Foreign key violation
-                            return BadRequest("A related record does not exist.");
+                            errors["general"] = new List<string> { "A related record does not exist." };
+                            return BadRequest(new { errors });
                         default:
-                            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected database error occurred.");
+                            errors["general"] = new List<string> { "An unexpected database error occurred." };
+                            return StatusCode(StatusCodes.Status500InternalServerError, new { errors });
                     }
                 }
 
@@ -105,6 +112,7 @@ namespace Restful_API.Controllers
 
             return CreatedAtAction(nameof(GetUserList), new { id = user.id }, user);
         }
+
         private bool IsValidPassword(string password)
         {
             if (string.IsNullOrEmpty(password))
@@ -128,6 +136,95 @@ namespace Restful_API.Controllers
 
             return true;
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<User>> UpdateUser(int id, CreateUserDto createUserDto)
+        {
+            var errors = new Dictionary<string, List<string>>();
+
+            // Find the existing user
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound(new { message = "User not found." });
+
+            // Validate Password
+            if (!IsValidPassword(createUserDto.user_password))
+                errors["user_password"] = new List<string> { "Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one numeric digit." };
+
+            // Validate AbfiId
+            if (string.IsNullOrWhiteSpace(createUserDto.abfi_id))
+                errors["abfi_id"] = new List<string> { "AbfiId cannot be empty." };
+
+            if (await _context.Users.AnyAsync(u => u.abfi_id == createUserDto.abfi_id && u.id != id))
+                errors["abfi_id"] = new List<string> { "ID has already been used." };
+
+            // Validate Contact Number
+            if (string.IsNullOrWhiteSpace(createUserDto.contact_num) ||
+                createUserDto.contact_num.Length != 11 ||
+                !createUserDto.contact_num.All(char.IsDigit))
+                errors["contact_num"] = new List<string> { "Contact Number must be exactly 11 digits." };
+
+            // Validate Username
+            if (string.IsNullOrWhiteSpace(createUserDto.username) || createUserDto.username.Length < 8)
+                errors["username"] = new List<string> { "Username must be at least 8 characters long." };
+
+            // Validate Email Address
+            if (string.IsNullOrWhiteSpace(createUserDto.email_add) ||
+                !createUserDto.email_add.EndsWith("@abfiph.com") ||
+                !new EmailAddressAttribute().IsValid(createUserDto.email_add))
+                errors["email_add"] = new List<string> { "Email address must be a valid address with domain '@abfiph.com'." };
+
+            if (await _context.Users.AnyAsync(u => u.email_add == createUserDto.email_add && u.id != id))
+                errors["email_add"] = new List<string> { "Email address must be unique." };
+
+            if (errors.Count > 0)
+                return BadRequest(new { errors });
+
+            // Update user properties
+            user.abfi_id = createUserDto.abfi_id;
+            user.fname = createUserDto.fname;
+            user.mname = createUserDto.mname;
+            user.lname = createUserDto.lname;
+            user.role = createUserDto.role;
+            user.contact_num = createUserDto.contact_num;
+            user.email_add = createUserDto.email_add;
+            user.username = createUserDto.username;
+            user.date_updated = DateTime.UtcNow;
+
+            if (!string.IsNullOrEmpty(createUserDto.user_password))
+                user.SetPassword(createUserDto.user_password); // Hash the new password if provided
+
+            try
+            {
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log exception details for debugging
+                Console.WriteLine($"Error: {ex.Message}");
+
+                if (ex.InnerException is SqlException sqlEx)
+                {
+                    switch (sqlEx.Number)
+                    {
+                        case 2627: // Unique constraint violation
+                            errors["general"] = new List<string> { "A user with the same ID or email address already exists." };
+                            return BadRequest(new { errors });
+                        case 547: // Foreign key violation
+                            errors["general"] = new List<string> { "A related record does not exist." };
+                            return BadRequest(new { errors });
+                        default:
+                            errors["general"] = new List<string> { "An unexpected database error occurred." };
+                            return StatusCode(StatusCodes.Status500InternalServerError, new { errors });
+                    }
+                }
+
+                // Rethrow if not handled above
+                throw;
+            }
+
+            return Ok(user);
+        }
+
     }
 }
-

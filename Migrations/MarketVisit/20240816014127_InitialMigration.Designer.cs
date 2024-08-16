@@ -8,11 +8,11 @@ using Restful_API.Data;
 
 #nullable disable
 
-namespace Restful_API.Migrations
+namespace Restful_API.Migrations.MarketVisit
 {
     [DbContext(typeof(MarketVisitContext))]
-    [Migration("20240815065700_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240816014127_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

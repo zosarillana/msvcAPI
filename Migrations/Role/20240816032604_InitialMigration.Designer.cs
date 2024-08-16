@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
 #nullable disable
 
-namespace Restful_API.Migrations
+namespace Restful_API.Migrations.Role
 {
-    [DbContext(typeof(MarketVisitContext))]
-    partial class MarketVisitContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(RoleContext))]
+    [Migration("20240816032604_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace Restful_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Restful_API.MarketVisit", b =>
+            modelBuilder.Entity("Restful_API.Model.Role", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -29,21 +32,19 @@ namespace Restful_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("area")
+                    b.Property<string>("role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("visitdate")
+                    b.Property<string>("role_description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("visitor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("id");
 
-                    b.ToTable("MarketVisits");
+                    b.ToTable("Roles");
                 });
 #pragma warning restore 612, 618
         }

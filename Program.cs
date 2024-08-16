@@ -16,6 +16,10 @@ builder.Services.AddDbContext<MarketVisitContext>(options =>
     }
 );
 
+builder.Services.AddDbContext<RoleContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );

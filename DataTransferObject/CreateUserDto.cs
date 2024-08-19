@@ -8,7 +8,7 @@ namespace Restful_API.DataTransferObject
         [Required]
         public string fname { get; set; }
         public string mname { get; set; }
-        [Required]
+      
         public string lname { get; set; }
         [Required]
         public string role { get; set; }

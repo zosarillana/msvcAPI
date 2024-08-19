@@ -7,6 +7,7 @@ namespace Restful_API.DataTransferObject
         public string abfi_id { get; set; }
         [Required]
         public string fname { get; set; }
+
         public string mname { get; set; }
       
         public string lname { get; set; }

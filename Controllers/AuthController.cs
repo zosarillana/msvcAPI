@@ -35,6 +35,25 @@ public class AuthController : ControllerBase
         }
 
         var token = _jwtTokenService.GenerateJwtToken(user);
-        return Ok(new { Token = token });
+
+        // Include user details in the response
+        var userDto = new
+        {
+            user.username,
+            user.user_password,           
+            user.fname,
+            user.mname,
+            user.lname,
+            user.role,
+            user.contact_num,
+            user.email_add,
+        };
+
+        return Ok(new
+        {
+            Token = token,
+            User = userDto
+        });
     }
+
 }

@@ -168,6 +168,16 @@ namespace Restful_API.Controllers
             user.username = updateUserDto.username;
             user.date_updated = DateTime.UtcNow;
 
+            // Handle password update
+            if (!string.IsNullOrEmpty(updateUserDto.user_password))
+            {
+                if (!IsValidPassword(updateUserDto.user_password))
+                {
+                    return BadRequest(new { errors = new { user_password = new List<string> { "Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one numeric digit." } } });
+                }
+                user.SetPassword(updateUserDto.user_password); // Hash the password
+            }
+
             try
             {
                 _context.Users.Update(user);
@@ -198,6 +208,7 @@ namespace Restful_API.Controllers
             }
             return Ok(user);
         }
+
 
         [HttpDelete("{id}")]
 

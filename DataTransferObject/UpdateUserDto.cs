@@ -16,6 +16,8 @@ namespace Restful_API.DataTransferObject
         public string email_add { get; set; }       
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Username must be at least 8 characters long.")]
         public string username { get; set; }
-      
+
+        public string user_password { get; set; } // Use this for password
+
     }
 }

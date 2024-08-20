@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Restful_API.Data;
 using Restful_API.Interface;
-//using Restful_API.Services; // Ensure this namespace is correct
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,25 +11,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Configure Entity Framework contexts
 
 builder.Services.AddDbContext<MarketVisitContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddDbContext<RoleContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
 
+// Configure Entity Framework contexts
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddCors(options => options.AddPolicy(name: "MarketVisitOrigins",
-    policy =>
-    {
-        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
-    }
-));
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MarketVisitOrigins",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // Ensure this matches your Angular app URL
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -48,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Register JWT service with configuration values
+// Register JWT token service
 builder.Services.AddSingleton<IJwtTokenService>(provider =>
     new JwtTokenService(
         builder.Configuration["Jwt:Issuer"],
@@ -65,12 +68,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Apply CORS policy
 app.UseCors("MarketVisitOrigins");
 
+// Apply HTTPS Redirection
 app.UseHttpsRedirection();
+
+// Apply Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Map controllers
 app.MapControllers();
 
 app.Run();

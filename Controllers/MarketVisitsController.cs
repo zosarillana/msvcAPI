@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restful_API.Data;
+using Restful_API.DataTransferObject;
 
 namespace Restful_API.Controllers
 {
@@ -22,33 +23,71 @@ namespace Restful_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<MarketVisit>>> CreateMarketVisits(MarketVisit marketVisit)
+        public async Task<ActionResult<List<MarketVisit>>> CreateMarketVisits([FromBody] MarketVisitDto dto)
         {
+            if (dto == null)
+            {
+                return BadRequest("MarketVisitDto is required.");
+            }
+
+            // Create a new MarketVisit entity
+            var marketVisit = new MarketVisit
+            {
+                user_id = dto.user_id,
+                visit_date = dto.visit_date,
+                visit_area = dto.visit_area,
+                visit_accountName = dto.visit_accountName,
+                visit_distributor = dto.visit_distributor,
+                visit_salesPersonnel = dto.visit_salesPersonnel,
+                visit_accountType = dto.visit_accountType,
+                visit_isr = dto.visit_isr,
+                visit_isrNeed = dto.visit_isrNeed,
+                visit_payolaMerchandiser = dto.visit_payolaMerchandiser,
+                visit_averageOffTakePd = dto.visit_averageOffTakePd,
+                visit_pod = dto.visit_pod,
+                visit_competitorsCheck = dto.visit_competitorsCheck,
+                visit_pap = dto.visit_pap
+            };
+
             _context.MarketVisits.Add(marketVisit);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.MarketVisits.ToListAsync());
         }
 
+
         [HttpPut]
-        public async Task<ActionResult<List<MarketVisit>>> UpdateMarketVisits(MarketVisit marketVisit)
+        public async Task<ActionResult<List<MarketVisit>>> UpdateMarketVisits([FromBody] UpdateMarketVisitDto dto)
         {
-            // Find the existing record
-            var dbRESTFUL = await _context.MarketVisits.FindAsync(marketVisit.id);
+            if (dto == null)
+            {
+                return BadRequest("MarketVisitUpdateDto is required.");
+            }
 
-            // Check if the record exists
+            var dbRESTFUL = await _context.MarketVisits.FindAsync(dto.id);
+
             if (dbRESTFUL == null)
-                return BadRequest("Visit not found");
+            {
+                return NotFound("Visit not found");
+            }
 
-            // Update the fields with the new values
-            dbRESTFUL.area = marketVisit.area;
-            dbRESTFUL.visitor = marketVisit.visitor;
-            dbRESTFUL.visitdate = marketVisit.visitdate;
+            dbRESTFUL.user_id = dto.user_id;
+            dbRESTFUL.visit_date = dto.visit_date;
+            dbRESTFUL.visit_area = dto.visit_area;
+            dbRESTFUL.visit_accountName = dto.visit_accountName;
+            dbRESTFUL.visit_distributor = dto.visit_distributor;
+            dbRESTFUL.visit_salesPersonnel = dto.visit_salesPersonnel;
+            dbRESTFUL.visit_accountType = dto.visit_accountType;
+            dbRESTFUL.visit_isr = dto.visit_isr;
+            dbRESTFUL.visit_isrNeed = dto.visit_isrNeed;
+            dbRESTFUL.visit_payolaMerchandiser = dto.visit_payolaMerchandiser;
+            dbRESTFUL.visit_averageOffTakePd = dto.visit_averageOffTakePd;
+            dbRESTFUL.visit_pod = dto.visit_pod;
+            dbRESTFUL.visit_competitorsCheck = dto.visit_competitorsCheck;
+            dbRESTFUL.visit_pap = dto.visit_pap;
 
-            // Save changes to the database
             await _context.SaveChangesAsync();
 
-            // Return the updated list of MarketVisits
             return Ok(await _context.MarketVisits.ToListAsync());
         }
 

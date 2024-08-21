@@ -1,14 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Restful_API
+﻿namespace Restful_API.DataTransferObject
 {
-    public class MarketVisit
+    public class UpdateMarketVisitDto
     {
         public int id { get; set; }
-
-        [ForeignKey("User")]  // Ensure this matches the navigation property name
         public int user_id { get; set; }
-
         public string visit_date { get; set; } = string.Empty;
         public string visit_area { get; set; } = string.Empty;
         public string visit_accountName { get; set; } = string.Empty;
@@ -22,8 +17,5 @@ namespace Restful_API
         public string visit_pod { get; set; } = string.Empty;
         public string visit_competitorsCheck { get; set; } = string.Empty;
         public string visit_pap { get; set; } = string.Empty;
-
-        // Navigation property
-        public User User { get; set; }
     }
 }

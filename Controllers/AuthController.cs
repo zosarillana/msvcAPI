@@ -17,13 +17,32 @@ public class AuthController : ControllerBase
         _userContext = userContext;
         _jwtTokenService = jwtTokenService;
     }
-
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        if (loginDto == null || string.IsNullOrEmpty(loginDto.username) || string.IsNullOrEmpty(loginDto.user_password))
+        var errors = new Dictionary<string, List<string>>();
+
+        if (string.IsNullOrEmpty(loginDto.username))
         {
-            return BadRequest(new { message = "Username and password are required" });
+            if (!errors.ContainsKey("username"))
+            {
+                errors["username"] = new List<string>();
+            }
+            errors["username"].Add("Username is required");
+        }
+
+        if (string.IsNullOrEmpty(loginDto.user_password))
+        {
+            if (!errors.ContainsKey("user_password"))
+            {
+                errors["user_password"] = new List<string>();
+            }
+            errors["user_password"].Add("Password is required");
+        }
+
+        if (errors.Count > 0)
+        {
+            return BadRequest(new { errors });
         }
 
         var user = await _userContext.Users
@@ -31,16 +50,15 @@ public class AuthController : ControllerBase
 
         if (user == null || !user.VerifyPassword(loginDto.user_password))
         {
-            return Unauthorized(new { message = "Invalid credentials" });
+            return Unauthorized(new { errors = new { general = new List<string> { "Invalid credentials" } } });
         }
 
         var token = _jwtTokenService.GenerateJwtToken(user);
 
-        // Include user details in the response
         var userDto = new
         {
             user.username,
-            user.user_password,           
+            user.user_password,
             user.fname,
             user.mname,
             user.lname,

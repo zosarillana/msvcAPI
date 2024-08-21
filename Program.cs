@@ -15,7 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MarketVisitContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
+
 
 
 // Configure Entity Framework contexts

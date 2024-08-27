@@ -62,7 +62,7 @@ public class AuthController : ControllerBase
             user.fname,
             user.mname,
             user.lname,
-            user.role,
+            user.role_id,
             user.contact_num,
             user.email_add,
         };

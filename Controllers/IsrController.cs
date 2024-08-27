@@ -83,7 +83,5 @@ namespace Restful_API.Controllers
 
             return Ok(await _context.Isrs.ToListAsync());
         }
-    }  
-        
-       
+    }                 
 }

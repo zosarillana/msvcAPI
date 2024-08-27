@@ -8,7 +8,7 @@ namespace Restful_API.DataTransferObject
         public string fname { get; set; }
         public string mname { get; set; }
         public string lname { get; set; }
-        public string role { get; set; }
+        public int role_id { get; set; }
         [StringLength(11, MinimumLength = 11, ErrorMessage = "Contact number must be exactly 11 digits.")]
         [RegularExpression(@"^\d{11}$", ErrorMessage = "Contact number must contain only digits.")]
         public string contact_num { get; set; }

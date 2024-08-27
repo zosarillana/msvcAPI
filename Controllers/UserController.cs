@@ -76,7 +76,7 @@ namespace Restful_API.Controllers
                 fname = createUserDto.fname,
                 mname = createUserDto.mname,
                 lname = createUserDto.lname,
-                role = createUserDto.role,
+                role_id = createUserDto.role_id,
                 contact_num = createUserDto.contact_num,
                 email_add = createUserDto.email_add,
                 username = createUserDto.username,
@@ -162,7 +162,7 @@ namespace Restful_API.Controllers
             user.fname = updateUserDto.fname;
             user.mname = updateUserDto.mname;
             user.lname = updateUserDto.lname;
-            user.role = updateUserDto.role;
+            user.role_id = updateUserDto.role_id;
             user.contact_num = updateUserDto.contact_num;
             user.email_add = updateUserDto.email_add;
             user.username = updateUserDto.username;

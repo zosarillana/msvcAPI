@@ -15,8 +15,7 @@
             public string visit_payolaSupervisor { get; set; } = string.Empty;
             public string visit_payolaMerchandiser { get; set; } = string.Empty;
             public string visit_averageOffTakePd { get; set; } = string.Empty;
-            public string visit_podCanned { get; set; } = string.Empty;
-            public string visit_podMPP { get; set; } = string.Empty;
+            public int pod_id { get; set; }           
             public string visit_competitorsCheck { get; set; } = string.Empty;
             public string visit_pap { get; set; } = string.Empty;
     

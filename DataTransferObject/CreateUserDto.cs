@@ -13,7 +13,7 @@ public class CreateUserDto
     public string lname { get; set; }
 
     [Required]
-    public string role { get; set; }
+    public int role_id { get; set; }
 
     [Required]
     [StringLength(11, MinimumLength = 11, ErrorMessage = "Contact number must be exactly 11 digits.")]

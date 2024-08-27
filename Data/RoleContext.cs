@@ -10,5 +10,16 @@ namespace Restful_API.Data
         }
 
         public DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>()
+                .ToTable("Roles")  // Table name in database
+                .HasKey(i => i.id);
+
+            modelBuilder.Entity<Role>()
+                .Property(i => i.id)
+                .ValueGeneratedOnAdd();
+        }
     }
 }

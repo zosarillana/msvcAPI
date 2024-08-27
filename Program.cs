@@ -23,6 +23,16 @@ builder.Services.AddDbContext<IsrContext>(options =>
            .EnableSensitiveDataLogging()
            .LogTo(Console.WriteLine, LogLevel.Information));
 
+builder.Services.AddDbContext<RoleContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
+
+builder.Services.AddDbContext<PodContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
+
 // Configure Entity Framework contexts
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

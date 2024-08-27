@@ -24,8 +24,8 @@ namespace Restful_API
         public string visit_payolaSupervisor { get; set; } = string.Empty;
         public string visit_payolaMerchandiser { get; set; } = string.Empty;
         public string visit_averageOffTakePd { get; set; } = string.Empty;
-        public string visit_podCanned { get; set; } = string.Empty;
-        public string visit_podMPP { get; set; } = string.Empty;
+        [ForeignKey("Pod")]
+        public int pod_id { get; set; }
         public string visit_competitorsCheck { get; set; } = string.Empty;
         public string visit_pap { get; set; } = string.Empty;
 
@@ -41,5 +41,6 @@ namespace Restful_API
         // Navigation property
         public User User { get; set; }
         public Isr Isr { get; set; }
+        public Pod Pod { get; set; }
     }
 }

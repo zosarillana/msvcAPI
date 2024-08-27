@@ -23,7 +23,7 @@ namespace Restful_API.Data
                 .HasOne(mv => mv.Isr)               // Navigation property
                 .WithMany()                         // Assuming Isr does not have a collection of MarketVisits
                 .HasForeignKey(mv => mv.isr_id)    // Foreign key property
-                .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed
+                .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed         
 
             modelBuilder.Entity<User>()
                 .HasKey(u => u.id);
@@ -38,6 +38,22 @@ namespace Restful_API.Data
             modelBuilder.Entity<Isr>()
                 .Property(i => i.id)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Pod>()
+            .ToTable("Pods")  // Define table name
+            .HasKey(p => p.id);
+            modelBuilder.Entity<Pod>()
+                .Property(p => p.id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Role>()
+                .ToTable("Roles")  // Define table name
+                .HasKey(r => r.id);
+            modelBuilder.Entity<Role>()
+                .Property(r => r.id)
+                .ValueGeneratedOnAdd();
+
+
         }
     }
 }

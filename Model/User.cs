@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Restful_API.Model;
 
 public class User
 {
@@ -22,9 +23,10 @@ public class User
     [StringLength(50)]
     public string lname { get; set; } = string.Empty;
 
+    [ForeignKey("Role")]
     [Required]
     [StringLength(50)]
-    public string role { get; set; } = string.Empty;
+    public int role_id { get; set; }
 
     [Required]
     [StringLength(50)]
@@ -45,6 +47,8 @@ public class User
     public DateTime date_created { get; set; }
     public DateTime date_updated { get; set; }
 
+    public Role Role { get; set; }
+
     public User()
     {
         date_created = DateTime.UtcNow;
@@ -60,4 +64,6 @@ public class User
     {
         return BCrypt.Net.BCrypt.Verify(password, user_password);
     }
+
+   
 }

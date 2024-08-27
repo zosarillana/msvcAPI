@@ -12,7 +12,7 @@ using Restful_API.Data;
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    [Migration("20240827020708_InitialMigration")]
+    [Migration("20240827053852_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -40,6 +40,9 @@ namespace Restful_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("isr_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("pod_id")
                         .HasColumnType("int");
 
                     b.Property<int>("user_id")
@@ -89,14 +92,6 @@ namespace Restful_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("visit_podCanned")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("visit_podMPP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("visit_salesPersonnel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,6 +99,8 @@ namespace Restful_API.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("isr_id");
+
+                    b.HasIndex("pod_id");
 
                     b.HasIndex("user_id");
 
@@ -123,10 +120,20 @@ namespace Restful_API.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("image_path")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("isr_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("isr_others")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("isr_type")
                         .IsRequired()
@@ -136,6 +143,67 @@ namespace Restful_API.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Isrs");
+                });
+
+            modelBuilder.Entity("Restful_API.Model.Pod", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("image_path")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("pod_name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("pod_others")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("pod_type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Pods", (string)null);
+                });
+
+            modelBuilder.Entity("Restful_API.Model.Role", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("role_description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("User", b =>
@@ -181,10 +249,9 @@ namespace Restful_API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("role")
-                        .IsRequired()
+                    b.Property<int>("role_id")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("int");
 
                     b.Property<string>("user_password")
                         .IsRequired()
@@ -198,6 +265,8 @@ namespace Restful_API.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("role_id");
+
                     b.ToTable("Users");
                 });
 
@@ -209,6 +278,12 @@ namespace Restful_API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Restful_API.Model.Pod", "Pod")
+                        .WithMany()
+                        .HasForeignKey("pod_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("User", "User")
                         .WithMany()
                         .HasForeignKey("user_id")
@@ -217,7 +292,20 @@ namespace Restful_API.Migrations
 
                     b.Navigation("Isr");
 
+                    b.Navigation("Pod");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.HasOne("Restful_API.Model.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("role_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

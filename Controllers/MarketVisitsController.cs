@@ -44,8 +44,7 @@ namespace Restful_API.Controllers
                 visit_isrNeed = dto.visit_isrNeed,
                 visit_payolaMerchandiser = dto.visit_payolaMerchandiser,
                 visit_averageOffTakePd = dto.visit_averageOffTakePd,
-                visit_podCanned = dto.visit_podCanned,
-                visit_podMPP = dto.visit_podMPP,
+            pod_id = dto.pod_id,
                 visit_competitorsCheck = dto.visit_competitorsCheck,
                 visit_pap = dto.visit_pap
             };
@@ -84,8 +83,7 @@ namespace Restful_API.Controllers
             dbRESTFUL.visit_payolaMerchandiser = dto.visit_payolaMerchandiser;
             dbRESTFUL.visit_payolaSupervisor = dto.visit_payolaSupervisor;
             dbRESTFUL.visit_averageOffTakePd = dto.visit_averageOffTakePd;
-            dbRESTFUL.visit_podCanned = dto.visit_pod;
-            dbRESTFUL.visit_podMPP = dto.visit_podMPP;
+            dbRESTFUL.pod_id = dto.pod_id;            
             dbRESTFUL.visit_competitorsCheck = dto.visit_competitorsCheck;
             dbRESTFUL.visit_pap = dto.visit_pap;
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restful_API.Model;
 
 namespace Restful_API.Data
 {
@@ -6,8 +7,9 @@ namespace Restful_API.Data
     {
         public MarketVisitContext(DbContextOptions<MarketVisitContext> options) : base(options) { }
 
-        public DbSet<MarketVisit> MarketVisits { get; set; }  // Fix this line
+        public DbSet<MarketVisit> MarketVisits { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Isr> Isrs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,7 +19,25 @@ namespace Restful_API.Data
                 .HasForeignKey(mv => mv.user_id)   // Foreign key property
                 .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<MarketVisit>()
+                .HasOne(mv => mv.Isr)               // Navigation property
+                .WithMany()                         // Assuming Isr does not have a collection of MarketVisits
+                .HasForeignKey(mv => mv.isr_id)    // Foreign key property
+                .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed
+
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.id);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Isr>()
+                .HasKey(i => i.id);
+
+            modelBuilder.Entity<Isr>()
+                .Property(i => i.id)
+                .ValueGeneratedOnAdd();
         }
     }
 }

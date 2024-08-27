@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restful_API.Migrations
 {
     /// <inheritdoc />
-    public partial class addedDateCreatedandDateUpdated : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Isrs",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    isr_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    isr_type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Isrs", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -47,7 +62,7 @@ namespace Restful_API.Migrations
                     visit_distributor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_salesPersonnel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_accountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    visit_isr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isr_id = table.Column<int>(type: "int", nullable: false),
                     visit_isrNeed = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_payolaSupervisor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_payolaMerchandiser = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -63,12 +78,23 @@ namespace Restful_API.Migrations
                 {
                     table.PrimaryKey("PK_MarketVisits", x => x.id);
                     table.ForeignKey(
+                        name: "FK_MarketVisits_Isrs_isr_id",
+                        column: x => x.isr_id,
+                        principalTable: "Isrs",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_MarketVisits_Users_user_id",
                         column: x => x.user_id,
                         principalTable: "Users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MarketVisits_isr_id",
+                table: "MarketVisits",
+                column: "isr_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MarketVisits_user_id",
@@ -81,6 +107,9 @@ namespace Restful_API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MarketVisits");
+
+            migrationBuilder.DropTable(
+                name: "Isrs");
 
             migrationBuilder.DropTable(
                 name: "Users");

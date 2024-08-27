@@ -10,7 +10,7 @@
         public string visit_distributor { get; set; } = string.Empty;
         public string visit_salesPersonnel { get; set; } = string.Empty;
         public string visit_accountType { get; set; } = string.Empty;
-        public string isr_id { get; set; } = string.Empty;
+        public int isr_id { get; set; }
         public string visit_isrNeed { get; set; } = string.Empty;
         public string visit_payolaMerchandiser { get; set; } = string.Empty;
         public string visit_payolaSupervisor { get; set; } = string.Empty;

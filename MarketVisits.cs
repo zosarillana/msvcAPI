@@ -7,7 +7,7 @@ namespace Restful_API
     {
         public int id { get; set; }
 
-        [ForeignKey("User")]  // Ensure this matches the navigation property name
+        [ForeignKey("User")] 
         public int user_id { get; set; }
 
         public string visit_date { get; set; } = string.Empty;
@@ -18,9 +18,10 @@ namespace Restful_API
         public string visit_accountType { get; set; } = string.Empty;
 
         [ForeignKey("Isr")]
-        public string isr_id { get; set; } = string.Empty;
+        public int isr_id { get; set; } 
+
         public string visit_isrNeed { get; set; } = string.Empty;
-        public string visit_payolaSupervisor {  get; set; } = string.Empty;
+        public string visit_payolaSupervisor { get; set; } = string.Empty;
         public string visit_payolaMerchandiser { get; set; } = string.Empty;
         public string visit_averageOffTakePd { get; set; } = string.Empty;
         public string visit_podCanned { get; set; } = string.Empty;

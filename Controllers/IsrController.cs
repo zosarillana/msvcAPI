@@ -9,11 +9,10 @@ namespace Restful_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class IsrController : ControllerBase
-
     {
         private readonly IsrContext _context;
-
         public IsrController(IsrContext context) { 
+            _context = context;
         }
         [HttpGet]
         public async Task<ActionResult<List<Isr>>> GetIsrs()
@@ -33,8 +32,10 @@ namespace Restful_API.Controllers
             {
                 id = dto.id,
                 isr_name = dto.isr_name,
+                isr_others = dto.isr_others,
                 isr_type = dto.isr_type,
-                description = dto.description
+                description = dto.description,
+                image_path = dto.image_path
             };
 
             _context.Isrs.Add(isr);
@@ -58,10 +59,12 @@ namespace Restful_API.Controllers
             return NotFound("Isr not found");
             }
             
-            dbRESTFUL.id = dto.id;
+            dbRESTFUL.id = dto.id;          
             dbRESTFUL.isr_name = dto.isr_name;
             dbRESTFUL.isr_type = dto.isr_type;
-            dbRESTFUL.description = dto.description;           
+            dbRESTFUL.isr_others = dto.isr_others;
+            dbRESTFUL.description = dto.description;
+            dbRESTFUL.image_path = dto.image_path;
 
             await _context.SaveChangesAsync();
             return Ok(await _context.Isrs.ToListAsync());

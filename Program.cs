@@ -18,7 +18,10 @@ builder.Services.AddDbContext<MarketVisitContext>(options =>
            .EnableSensitiveDataLogging()
            .LogTo(Console.WriteLine, LogLevel.Information));
 
-
+builder.Services.AddDbContext<IsrContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
 
 // Configure Entity Framework contexts
 builder.Services.AddDbContext<UserContext>(options =>

@@ -7,14 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
-
 #nullable disable
 
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    [Migration("20240822074509_addedDateCreatedandDateUpdated")]
-    partial class addedDateCreatedandDateUpdated
+    [Migration("20240827020708_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +38,9 @@ namespace Restful_API.Migrations
 
                     b.Property<DateTime>("date_updated")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("isr_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("user_id")
                         .HasColumnType("int");
@@ -68,10 +70,6 @@ namespace Restful_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("visit_distributor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("visit_isr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -105,9 +103,39 @@ namespace Restful_API.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("isr_id");
+
                     b.HasIndex("user_id");
 
                     b.ToTable("MarketVisits");
+                });
+
+            modelBuilder.Entity("Restful_API.Model.Isr", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("isr_name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("isr_type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Isrs");
                 });
 
             modelBuilder.Entity("User", b =>
@@ -175,11 +203,19 @@ namespace Restful_API.Migrations
 
             modelBuilder.Entity("Restful_API.MarketVisit", b =>
                 {
+                    b.HasOne("Restful_API.Model.Isr", "Isr")
+                        .WithMany()
+                        .HasForeignKey("isr_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("User", "User")
                         .WithMany()
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Isr");
 
                     b.Navigation("User");
                 });

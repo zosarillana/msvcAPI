@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
+
 #nullable disable
 
 namespace Restful_API.Migrations
@@ -29,6 +30,12 @@ namespace Restful_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime>("date_created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("date_updated")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("user_id")
                         .HasColumnType("int");
@@ -77,7 +84,15 @@ namespace Restful_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("visit_pod")
+                    b.Property<string>("visit_payolaSupervisor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("visit_podCanned")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("visit_podMPP")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

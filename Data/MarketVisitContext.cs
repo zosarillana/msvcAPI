@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restful_API;
 
 namespace Restful_API.Data
 {
@@ -7,7 +6,7 @@ namespace Restful_API.Data
     {
         public MarketVisitContext(DbContextOptions<MarketVisitContext> options) : base(options) { }
 
-        public DbSet<MarketVisit> MarketVisits { get; set; }
+        public DbSet<MarketVisit> MarketVisits { get; set; }  // Fix this line
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

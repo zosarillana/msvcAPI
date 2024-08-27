@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restful_API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class addedDateCreatedandDateUpdated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,11 +49,15 @@ namespace Restful_API.Migrations
                     visit_accountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_isr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_isrNeed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    visit_payolaSupervisor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_payolaMerchandiser = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_averageOffTakePd = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    visit_pod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    visit_podCanned = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    visit_podMPP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     visit_competitorsCheck = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    visit_pap = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    visit_pap = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_updated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

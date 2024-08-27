@@ -40,11 +40,12 @@ namespace Restful_API.Controllers
                 visit_distributor = dto.visit_distributor,
                 visit_salesPersonnel = dto.visit_salesPersonnel,
                 visit_accountType = dto.visit_accountType,
-                visit_isr = dto.visit_isr,
+                isr_id = dto.isr_id,
                 visit_isrNeed = dto.visit_isrNeed,
                 visit_payolaMerchandiser = dto.visit_payolaMerchandiser,
                 visit_averageOffTakePd = dto.visit_averageOffTakePd,
-                visit_pod = dto.visit_pod,
+                visit_podCanned = dto.visit_podCanned,
+                visit_podMPP = dto.visit_podMPP,
                 visit_competitorsCheck = dto.visit_competitorsCheck,
                 visit_pap = dto.visit_pap
             };
@@ -78,11 +79,13 @@ namespace Restful_API.Controllers
             dbRESTFUL.visit_distributor = dto.visit_distributor;
             dbRESTFUL.visit_salesPersonnel = dto.visit_salesPersonnel;
             dbRESTFUL.visit_accountType = dto.visit_accountType;
-            dbRESTFUL.visit_isr = dto.visit_isr;
+            dbRESTFUL.isr_id = dto.isr_id;
             dbRESTFUL.visit_isrNeed = dto.visit_isrNeed;
             dbRESTFUL.visit_payolaMerchandiser = dto.visit_payolaMerchandiser;
+            dbRESTFUL.visit_payolaSupervisor = dto.visit_payolaSupervisor;
             dbRESTFUL.visit_averageOffTakePd = dto.visit_averageOffTakePd;
-            dbRESTFUL.visit_pod = dto.visit_pod;
+            dbRESTFUL.visit_podCanned = dto.visit_pod;
+            dbRESTFUL.visit_podMPP = dto.visit_podMPP;
             dbRESTFUL.visit_competitorsCheck = dto.visit_competitorsCheck;
             dbRESTFUL.visit_pap = dto.visit_pap;
 
@@ -93,7 +96,8 @@ namespace Restful_API.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult<List<MarketVisit>>> DeleteMarketVisits(int id) {
+        public async Task<ActionResult<List<MarketVisit>>> DeleteMarketVisits(int id)
+        {
 
             var dbRESTFUL = await _context.MarketVisits.FindAsync(id);
             if (dbRESTFUL == null)

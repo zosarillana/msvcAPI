@@ -21,10 +21,16 @@ public class JwtTokenService : IJwtTokenService
     public string GenerateJwtToken(User user)
     {
         var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.username), 
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
+        new Claim("role", user.role), 
+        new Claim("fname", user.fname), 
+        new Claim("mname", user.mname ?? string.Empty), 
+        new Claim("lname", user.lname), 
+        new Claim("contact_num", user.contact_num), 
+        new Claim("abfi_id", user.abfi_id) 
+    };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

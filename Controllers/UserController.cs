@@ -116,7 +116,7 @@ namespace Restful_API.Controllers
                 throw;
             }
 
-            return CreatedAtAction(nameof(GetUserList), new { id = user.id }, user);
+            return CreatedAtAction(nameof(GetUserList), new { user.id }, user);
         }
 
         private bool IsValidPassword(string password)

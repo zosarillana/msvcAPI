@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
@@ -11,9 +12,11 @@ using Restful_API.Data;
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    partial class MarketVisitContextModelSnapshot : ModelSnapshot
+    [Migration("20240827061542_AddedAreas")]
+    partial class AddedAreas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,12 +121,6 @@ namespace Restful_API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("date_created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date_updated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("description")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -141,12 +138,6 @@ namespace Restful_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime>("date_created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date_updated")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -186,12 +177,6 @@ namespace Restful_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("date_created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date_updated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("description")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -229,12 +214,6 @@ namespace Restful_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime>("date_created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date_updated")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("role")
                         .IsRequired()

@@ -35,7 +35,7 @@ namespace Restful_API.Controllers
             {
                 user_id = dto.user_id,
                 visit_date = dto.visit_date,
-                visit_area = dto.visit_area,
+                area_id = dto.area_id,
                 visit_accountName = dto.visit_accountName,
                 visit_distributor = dto.visit_distributor,
                 visit_salesPersonnel = dto.visit_salesPersonnel,
@@ -73,7 +73,7 @@ namespace Restful_API.Controllers
 
             dbRESTFUL.user_id = dto.user_id;
             dbRESTFUL.visit_date = dto.visit_date;
-            dbRESTFUL.visit_area = dto.visit_area;
+            dbRESTFUL.area_id = dto.area_id;
             dbRESTFUL.visit_accountName = dto.visit_accountName;
             dbRESTFUL.visit_distributor = dto.visit_distributor;
             dbRESTFUL.visit_salesPersonnel = dto.visit_salesPersonnel;

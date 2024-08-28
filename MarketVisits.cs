@@ -11,7 +11,9 @@ namespace Restful_API
         public int user_id { get; set; }
 
         public string visit_date { get; set; } = string.Empty;
-        public string visit_area { get; set; } = string.Empty;
+
+        [ForeignKey("Area")]
+        public int area_id { get; set; }
         public string visit_accountName { get; set; } = string.Empty;
         public string visit_distributor { get; set; } = string.Empty;
         public string visit_salesPersonnel { get; set; } = string.Empty;
@@ -42,5 +44,6 @@ namespace Restful_API
         public User User { get; set; }
         public Isr Isr { get; set; }
         public Pod Pod { get; set; }
+        public Area Area { get; set; }
     }
 }

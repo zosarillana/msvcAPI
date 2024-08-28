@@ -49,7 +49,16 @@ namespace Restful_API.Data
             modelBuilder.Entity<Role>()
                 .ToTable("Roles")  // Define table name
                 .HasKey(r => r.id);
+         
             modelBuilder.Entity<Role>()
+                .Property(r => r.id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Area>()
+            .ToTable("Areas")  // Define table name
+            .HasKey(r => r.id);
+
+            modelBuilder.Entity<Area>()
                 .Property(r => r.id)
                 .ValueGeneratedOnAdd();
 

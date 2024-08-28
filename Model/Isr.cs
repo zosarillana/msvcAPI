@@ -21,5 +21,12 @@ namespace Restful_API.Model
         public string description { get; set; } = string.Empty;
         [StringLength(255)]
         public string image_path { get; set; } = string.Empty;
+        public DateTime date_created { get; set; }
+        public DateTime date_updated { get; set; }
+        public Isr()
+        {
+            date_created = DateTime.UtcNow;
+            date_updated = DateTime.UtcNow;
+        }
     }
 }

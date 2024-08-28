@@ -5,7 +5,7 @@
  
             public int user_id { get; set; }
             public string visit_date { get; set; } = string.Empty;
-            public string visit_area { get; set; } = string.Empty;
+            public int area_id { get; set; }
             public string visit_accountName { get; set; } = string.Empty;
             public string visit_distributor { get; set; } = string.Empty;
             public string visit_salesPersonnel { get; set; } = string.Empty;

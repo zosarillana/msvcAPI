@@ -35,7 +35,7 @@ namespace Restful_API.Controllers
             var role = new Role
             {
                 id = dto.id,
-                role = dto.role,
+                role_id = dto.role_id,
                 role_description = dto.role_description
             };
 
@@ -61,7 +61,7 @@ namespace Restful_API.Controllers
             }
 
             dbRESTFUL.id = dto.id;
-            dbRESTFUL.role = dto.role;
+            dbRESTFUL.role_id = dto.role_id;
             dbRESTFUL.role_description = dto.role_description;
 
 

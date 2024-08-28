@@ -20,18 +20,30 @@ public class JwtTokenService : IJwtTokenService
 
     public string GenerateJwtToken(User user)
     {
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("role", user.Role?.role ?? string.Empty),  // Access Role property
-            new Claim("fname", user.fname),
-            new Claim("mname", user.mname ?? string.Empty),
-            new Claim("lname", user.lname),
-            new Claim("contact_num", user.contact_num),
-            new Claim("abfi_id", user.abfi_id)
-        };
+        var claims = new List<Claim>();
 
+        if (user != null)
+        {
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.username ?? string.Empty));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+            // Use role_id directly from User
+            claims.Add(new Claim("role_id", user.role_id.ToString()));
+
+            // Use null-coalescing operators to handle nullable properties
+            claims.Add(new Claim("fname", user.fname ?? string.Empty));
+            claims.Add(new Claim("mname", user.mname ?? string.Empty));
+            claims.Add(new Claim("lname", user.lname ?? string.Empty));
+            claims.Add(new Claim("contact_num", user.contact_num ?? string.Empty));
+            claims.Add(new Claim("abfi_id", user.abfi_id ?? string.Empty));
+        }
+        else
+        {
+            // Handle the case where user is null
+            throw new InvalidOperationException("User is null and cannot create claims.");
+        }
+
+        var claimsArray = claims.ToArray();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

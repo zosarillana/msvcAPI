@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
@@ -11,9 +12,11 @@ using Restful_API.Data;
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    partial class MarketVisitContextModelSnapshot : ModelSnapshot
+    [Migration("20240902060425_MakePodOthersNullable")]
+    partial class MakePodOthersNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,6 +167,7 @@ namespace Restful_API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("isr_others")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 

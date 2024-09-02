@@ -137,3 +137,4 @@ C:\Users\zcsarillana\source\repos\Restful_API\Restful_API\bin\Debug\net8.0\runti
 C:\Users\zcsarillana\source\repos\Restful_API\Restful_API\obj\Debug\net8.0\Restful_API.sourcelink.json
 C:\Users\zcsarillana\source\repos\Restful_API\Restful_API\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\zcsarillana\source\repos\Restful_API\Restful_API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\zcsarillana\source\repos\Restful_API\Restful_API\bin\Debug\net8.0\Restful_API.staticwebassets.runtime.json

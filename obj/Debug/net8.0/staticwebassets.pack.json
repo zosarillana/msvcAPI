@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\zcsarillana\\source\\repos\\Restful_API\\Restful_API\\wwwroot\\uploads\\7b32e535-9cbd-4298-a72e-c357fa1ac36b.png",
+      "PackagePath": "staticwebassets\\uploads\\7b32e535-9cbd-4298-a72e-c357fa1ac36b.png"
+    },
+    {
+      "Id": "C:\\Users\\zcsarillana\\source\\repos\\Restful_API\\Restful_API\\wwwroot\\uploads\\a53a6baa-559d-40aa-95b3-aa89f92ff98e.jfif",
+      "PackagePath": "staticwebassets\\uploads\\a53a6baa-559d-40aa-95b3-aa89f92ff98e.jfif"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Restful_API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Restful_API.props",
+      "PackagePath": "build\\Restful_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Restful_API.props",
+      "PackagePath": "buildMultiTargeting\\Restful_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Restful_API.props",
+      "PackagePath": "buildTransitive\\Restful_API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

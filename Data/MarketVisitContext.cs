@@ -46,6 +46,13 @@ namespace Restful_API.Data
                 .Property(p => p.id)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Pap>()
+           .ToTable("Paps")  // Define table name
+           .HasKey(p => p.id);
+            modelBuilder.Entity<Pap>()
+                .Property(p => p.id)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Role>()
                 .ToTable("Roles")  // Define table name
                 .HasKey(r => r.id);

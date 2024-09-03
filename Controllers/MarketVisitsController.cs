@@ -46,7 +46,7 @@ namespace Restful_API.Controllers
                 visit_averageOffTakePd = dto.visit_averageOffTakePd,
             pod_id = dto.pod_id,
                 visit_competitorsCheck = dto.visit_competitorsCheck,
-                visit_pap = dto.visit_pap
+                pap_id = dto.pap_id
             };
 
             _context.MarketVisits.Add(marketVisit);
@@ -85,7 +85,7 @@ namespace Restful_API.Controllers
             dbRESTFUL.visit_averageOffTakePd = dto.visit_averageOffTakePd;
             dbRESTFUL.pod_id = dto.pod_id;            
             dbRESTFUL.visit_competitorsCheck = dto.visit_competitorsCheck;
-            dbRESTFUL.visit_pap = dto.visit_pap;
+            dbRESTFUL.pap_id = dto.pap_id;
 
             await _context.SaveChangesAsync();
 

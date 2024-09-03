@@ -17,6 +17,6 @@
         public string visit_averageOffTakePd { get; set; } = string.Empty;
         public int pod_id { get; set; }
         public string visit_competitorsCheck { get; set; } = string.Empty;
-        public string visit_pap { get; set; } = string.Empty;
+        public int pap_id { get; set; } 
     }
 }

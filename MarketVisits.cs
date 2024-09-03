@@ -29,7 +29,8 @@ namespace Restful_API
         [ForeignKey("Pod")]
         public int pod_id { get; set; }
         public string visit_competitorsCheck { get; set; } = string.Empty;
-        public string visit_pap { get; set; } = string.Empty;
+        [ForeignKey("Pap")]
+        public int pap_id { get; set; }
 
         public DateTime date_created { get; set; }
         public DateTime date_updated { get; set; }
@@ -44,6 +45,7 @@ namespace Restful_API
         public User User { get; set; }
         public Isr Isr { get; set; }
         public Pod Pod { get; set; }
+        public Pap Pap { get; set; }
         public Area Area { get; set; }
     }
 }

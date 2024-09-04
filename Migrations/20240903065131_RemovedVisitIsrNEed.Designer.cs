@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful_API.Data;
 
@@ -11,9 +12,11 @@ using Restful_API.Data;
 namespace Restful_API.Migrations
 {
     [DbContext(typeof(MarketVisitContext))]
-    partial class MarketVisitContextModelSnapshot : ModelSnapshot
+    [Migration("20240903065131_RemovedVisitIsrNEed")]
+    partial class RemovedVisitIsrNEed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,7 +314,7 @@ namespace Restful_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("User", b =>
@@ -383,7 +386,7 @@ namespace Restful_API.Migrations
                     b.HasOne("Restful_API.Model.Area", "Area")
                         .WithMany()
                         .HasForeignKey("area_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Restful_API.Model.Isr", "Isr")
@@ -395,13 +398,13 @@ namespace Restful_API.Migrations
                     b.HasOne("Restful_API.Model.Pap", "Pap")
                         .WithMany()
                         .HasForeignKey("pap_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Restful_API.Model.Pod", "Pod")
                         .WithMany()
                         .HasForeignKey("pod_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("User", "User")

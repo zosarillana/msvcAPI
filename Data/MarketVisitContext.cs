@@ -14,17 +14,36 @@ namespace Restful_API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MarketVisit>()
-                .HasOne(mv => mv.User)              // Navigation property
-                .WithMany()                         // Assuming User does not have a collection of MarketVisits
-                .HasForeignKey(mv => mv.user_id)   // Foreign key property
-                .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed
+                .HasOne(mv => mv.User)
+                .WithMany() // Adjust if User has a collection of MarketVisits
+                .HasForeignKey(mv => mv.user_id)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as needed
 
             modelBuilder.Entity<MarketVisit>()
-                .HasOne(mv => mv.Isr)               // Navigation property
-                .WithMany()                         // Assuming Isr does not have a collection of MarketVisits
-                .HasForeignKey(mv => mv.isr_id)    // Foreign key property
-                .OnDelete(DeleteBehavior.Restrict); // Configure delete behavior as needed         
+                .HasOne(mv => mv.Area)
+                .WithMany() // Adjust if Area has a collection of MarketVisits
+                .HasForeignKey(mv => mv.area_id)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as needed
 
+            modelBuilder.Entity<MarketVisit>()
+                .HasOne(mv => mv.Isr)
+                .WithMany() // Adjust if Isr has a collection of MarketVisits
+                .HasForeignKey(mv => mv.isr_id)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as needed
+
+            modelBuilder.Entity<MarketVisit>()
+                .HasOne(mv => mv.Pod)
+                .WithMany() // Adjust if Pod has a collection of MarketVisits
+                .HasForeignKey(mv => mv.pod_id)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as needed
+
+            modelBuilder.Entity<MarketVisit>()
+                .HasOne(mv => mv.Pap)
+                .WithMany() // Adjust if Pap has a collection of MarketVisits
+                .HasForeignKey(mv => mv.pap_id)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as needed
+
+            // Configure entities
             modelBuilder.Entity<User>()
                 .HasKey(u => u.id);
 
@@ -40,36 +59,28 @@ namespace Restful_API.Data
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Pod>()
-            .ToTable("Pods")  // Define table name
-            .HasKey(p => p.id);
+                .ToTable("Pods")
+                .HasKey(p => p.id);
+
             modelBuilder.Entity<Pod>()
                 .Property(p => p.id)
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Pap>()
-           .ToTable("Paps")  // Define table name
-           .HasKey(p => p.id);
+                .ToTable("Paps")
+                .HasKey(p => p.id);
+
             modelBuilder.Entity<Pap>()
                 .Property(p => p.id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Role>()
-                .ToTable("Roles")  // Define table name
-                .HasKey(r => r.id);
-         
-            modelBuilder.Entity<Role>()
-                .Property(r => r.id)
-                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Area>()
+                .ToTable("Areas")
+                .HasKey(a => a.id);
 
             modelBuilder.Entity<Area>()
-            .ToTable("Areas")  // Define table name
-            .HasKey(r => r.id);
-
-            modelBuilder.Entity<Area>()
-                .Property(r => r.id)
+                .Property(a => a.id)
                 .ValueGeneratedOnAdd();
-
-
         }
     }
 }
